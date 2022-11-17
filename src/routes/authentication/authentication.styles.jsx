@@ -12,7 +12,7 @@ export const AuthenticationContainer = styled.div`
 
   border-radius: 5px;
   overflow: hidden;
-  background-color: white;
+  background-color: var(--color-white);
   box-shadow: 0 4px 8px rgba(var(--color-black-rgb), 0.3);
 `;
 
