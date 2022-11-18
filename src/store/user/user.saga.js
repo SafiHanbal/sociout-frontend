@@ -7,6 +7,8 @@ import {
   loginFailed,
   signupSuccess,
   signupFailed,
+  logoutSuccess,
+  logoutFailed,
 } from './user.action';
 import USER_ACTION_TYPES from './user.types';
 
@@ -65,6 +67,24 @@ function* onSignUpStart() {
   yield takeLatest(USER_ACTION_TYPES.SIGNUP_START, signUpAsync);
 }
 
+// Logout
+
+function* logoutAsync() {
+  try {
+    const data = yield call(apiRequest, 'api/v1/user/logout');
+    if (data.status !== 'success') throw new Error(data.message);
+
+    yield put(logoutSuccess(null));
+    yield put(setToken(null));
+  } catch (err) {
+    yield put(logoutFailed(err));
+  }
+}
+
+function* onLogoutStart() {
+  yield takeLatest(USER_ACTION_TYPES.LOGOUT_START, logoutAsync);
+}
+
 export function* userSaga() {
-  yield all([call(onLoginStart), call(onSignUpStart)]);
+  yield all([call(onLoginStart), call(onSignUpStart), call(onLogoutStart)]);
 }

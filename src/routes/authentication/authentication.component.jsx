@@ -21,7 +21,7 @@ const Authentication = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('home');
+      navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);

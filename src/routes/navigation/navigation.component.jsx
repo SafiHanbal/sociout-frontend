@@ -10,7 +10,7 @@ import LogoSrc from '../../assets/logo.png';
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <LogoContainer>
+      <LogoContainer to="/">
         <LogoImg src={LogoSrc} alt="Sociout Logo" />
         <LogoText>Sociout</LogoText>
       </LogoContainer>

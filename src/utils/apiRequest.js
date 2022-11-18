@@ -15,7 +15,7 @@ export const apiRequest = async (
 ) => {
   const host = 'http://127.0.0.1:8000/';
   const url = host + endpoint;
-  const token = store.getState().user.token;
+  const token = store.getState().user?.token;
 
   const options = {
     method: reqTypes,

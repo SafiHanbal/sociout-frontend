@@ -59,7 +59,7 @@ const CurrentUserCard = () => {
         </InfoContainer>
       )}
 
-      <CustomizedLink>
+      <CustomizedLink to="/user">
         View More
         <Arrow />
       </CustomizedLink>

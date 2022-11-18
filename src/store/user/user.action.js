@@ -17,3 +17,10 @@ export const signupSuccess = (paylod) =>
   createAction(USER_ACTION_TYPES.SIGNUP_SUCCESS, paylod);
 export const signupFailed = (paylod) =>
   createAction(USER_ACTION_TYPES.SIGNUP_FAILED, paylod);
+
+export const logoutStart = (paylod) =>
+  createAction(USER_ACTION_TYPES.LOGOUT_START, paylod);
+export const logoutSuccess = (paylod) =>
+  createAction(USER_ACTION_TYPES.LOGOUT_SUCCESS, paylod);
+export const logoutFailed = (paylod) =>
+  createAction(USER_ACTION_TYPES.LOGOUT_FAILED, paylod);
