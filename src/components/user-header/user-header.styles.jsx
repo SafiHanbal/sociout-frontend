@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import { PlusSquare, MoreVertical } from 'react-feather';
 
 export const Container = styled.div`
-  width: 800px;
-  margin: 30px auto 15px;
-
+  margin-top: 40px;
   display: grid;
   grid-template-columns: 150px 1fr;
   grid-column-gap: 50px;
