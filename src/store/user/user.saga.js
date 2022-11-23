@@ -5,6 +5,8 @@ import {
   setToken,
   loginSuccess,
   loginFailed,
+  updateMeSuccess,
+  updateMeFailed,
   signupSuccess,
   signupFailed,
   logoutSuccess,
@@ -33,6 +35,23 @@ function* loginUserAsync({ payload: { email, password } }) {
 
 function* onLoginStart() {
   yield takeLatest(USER_ACTION_TYPES.LOGIN_START, loginUserAsync);
+}
+
+// Update Me
+function* updateMeAsync() {
+  try {
+    const data = yield call(apiRequest, 'api/v1/user/me');
+    if (data.status !== 'success') throw new Error(data.message);
+
+    const { user } = data.data;
+    yield put(updateMeSuccess(user));
+  } catch (err) {
+    yield put(updateMeFailed(err));
+  }
+}
+
+function* onUpdateMeStart() {
+  yield takeLatest(USER_ACTION_TYPES.UPDATE_ME_START, updateMeAsync);
 }
 
 // Sign Up
@@ -86,5 +105,10 @@ function* onLogoutStart() {
 }
 
 export function* userSaga() {
-  yield all([call(onLoginStart), call(onSignUpStart), call(onLogoutStart)]);
+  yield all([
+    call(onLoginStart),
+    call(onUpdateMeStart),
+    call(onSignUpStart),
+    call(onLogoutStart),
+  ]);
 }

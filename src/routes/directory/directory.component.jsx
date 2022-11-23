@@ -8,6 +8,7 @@ import User from '../user/user.component';
 import Settings from '../settings/settings.component';
 
 import { selectUser } from '../../store/user/user.selector';
+import Me from '../me/me.component';
 
 const Directory = () => {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ const Directory = () => {
       <Navigation />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="user" element={<User />} />
+        <Route path="user/:_id" element={<User />} />
+        <Route path="me" element={<Me />} />
         <Route path="settings" element={<Settings />} />
       </Routes>
     </>

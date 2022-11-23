@@ -21,6 +21,13 @@ export const userReducer = (state = INITIAL_STATE, action) => {
     case USER_ACTION_TYPES.LOGIN_FAILED:
       return { ...state, isLoading: false, error: payload };
 
+    case USER_ACTION_TYPES.UPDATE_ME_START:
+      return { ...state, isLoading: true };
+    case USER_ACTION_TYPES.UPDATE_ME_SUCCESS:
+      return { ...state, isLoading: false, user: payload };
+    case USER_ACTION_TYPES.UPDATE_ME_FAILED:
+      return { ...state, isLoading: false, error: payload };
+
     case USER_ACTION_TYPES.SIGNUP_START:
       return { ...state, isLoading: true };
     case USER_ACTION_TYPES.SIGNUP_SUCCESS:

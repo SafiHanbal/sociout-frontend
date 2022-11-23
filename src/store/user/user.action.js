@@ -11,6 +11,13 @@ export const loginSuccess = (paylod) =>
 export const loginFailed = (paylod) =>
   createAction(USER_ACTION_TYPES.LOGIN_FAILED, paylod);
 
+export const updateMeStart = (paylod) =>
+  createAction(USER_ACTION_TYPES.UPDATE_ME_START, paylod);
+export const updateMeSuccess = (paylod) =>
+  createAction(USER_ACTION_TYPES.UPDATE_ME_SUCCESS, paylod);
+export const updateMeFailed = (paylod) =>
+  createAction(USER_ACTION_TYPES.UPDATE_ME_FAILED, paylod);
+
 export const signupStart = (paylod) =>
   createAction(USER_ACTION_TYPES.SIGNUP_START, paylod);
 export const signupSuccess = (paylod) =>

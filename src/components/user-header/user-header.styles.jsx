@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { PlusSquare, MoreVertical } from 'react-feather';
+import { Button } from 'react-bootstrap';
 
 export const Container = styled.div`
   margin-top: 40px;
@@ -16,9 +17,15 @@ export const Avatar = styled.img`
 `;
 
 export const Header = styled.div`
-  display: grid;
-  grid-template-columns: 1fr repeat(2, 28px);
-  grid-gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ActionConatiner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const Name = styled.h2`
@@ -31,6 +38,7 @@ export const AddIcon = styled(PlusSquare)`
   cursor: pointer;
   height: 28px;
   width: 28px;
+  margin-right: 10px;
 `;
 
 export const MoreContainer = styled.div`
@@ -41,6 +49,16 @@ export const MoreIcon = styled(MoreVertical)`
   cursor: pointer;
   height: 28px;
   width: 28px;
+`;
+
+export const FollowButton = styled(Button)`
+  width: 66px;
+  height: 30px;
+  line-height: 1;
+  align-self: center;
+  font-size: 12px;
+  padding: 7px 0;
+  text-align: center;
 `;
 
 export const StatsContainer = styled.div`

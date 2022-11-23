@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AddIcon,
@@ -13,18 +14,38 @@ import {
   StatsHeading,
   StatsText,
   MoreContainer,
+  ActionConatiner,
+  FollowButton,
 } from './user-header.styles';
 
-import { selectUser } from '../../store/user/user.selector';
 import UserDropdown from '../user-dropdown/user-dropdown.component';
+import Loader from '../loader/loader.component';
 
-const UserHeader = () => {
-  const user = useSelector(selectUser);
+import { selectFollowUserLoading } from '../../store/other-users/other-users.selector';
+import { selectUser } from '../../store/user/user.selector';
+import {
+  followUserStart,
+  unfollowUserStart,
+} from '../../store/other-users/other-users.action';
 
+const UserHeader = ({ user }) => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectUser);
+  const followUserLoading = useSelector(selectFollowUserLoading);
+
+  const userId = useParams()._id;
   const [dropdownActive, setDropdownActive] = useState(false);
 
   const handleDropdown = () => {
     setDropdownActive(!dropdownActive);
+  };
+
+  const handleFollowUser = () => {
+    dispatch(followUserStart(userId));
+  };
+
+  const handleUnfollowUser = () => {
+    dispatch(unfollowUserStart(userId));
   };
 
   return (
@@ -33,11 +54,40 @@ const UserHeader = () => {
       <div>
         <Header>
           <Name>{user?.userName}</Name>
-          <AddIcon />
-          <MoreContainer>
-            <MoreIcon onClick={handleDropdown} />
-            {dropdownActive && <UserDropdown />}
-          </MoreContainer>
+          <ActionConatiner>
+            {/* Case 1 */}
+            {userId && !currentUser?.following.includes(userId) && (
+              <FollowButton variant="success" onClick={handleFollowUser}>
+                {followUserLoading ? (
+                  <Loader size={14} color="white" />
+                ) : (
+                  'Follow'
+                )}
+              </FollowButton>
+            )}
+
+            {/* Case 2 */}
+            {userId && currentUser?.following.includes(userId) && (
+              <FollowButton variant="secondary" onClick={handleUnfollowUser}>
+                {followUserLoading ? (
+                  <Loader size={14} color="white" />
+                ) : (
+                  'Unfollow'
+                )}
+              </FollowButton>
+            )}
+
+            {/* Case 3 */}
+            {!userId && (
+              <>
+                <AddIcon />
+                <MoreContainer>
+                  <MoreIcon onClick={handleDropdown} />
+                  {dropdownActive && <UserDropdown />}
+                </MoreContainer>
+              </>
+            )}
+          </ActionConatiner>
         </Header>
         <StatsContainer>
           <div>
