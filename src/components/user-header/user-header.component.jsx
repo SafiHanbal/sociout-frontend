@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -80,7 +80,9 @@ const UserHeader = ({ user }) => {
             {/* Case 3 */}
             {!userId && (
               <>
-                <AddIcon />
+                <Link to="/upload">
+                  <AddIcon />
+                </Link>
                 <MoreContainer>
                   <MoreIcon onClick={handleDropdown} />
                   {dropdownActive && <UserDropdown />}

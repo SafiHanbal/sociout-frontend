@@ -39,6 +39,7 @@ export const AddIcon = styled(PlusSquare)`
   height: 28px;
   width: 28px;
   margin-right: 10px;
+  stroke: var(--color-black);
 `;
 
 export const MoreContainer = styled.div`

@@ -27,7 +27,7 @@ export const apiRequest = async (
       'Content-Type': 'application/json',
     };
   }
-  console.log(token);
+
   if (token) {
     options.headers = {
       ...options.headers,

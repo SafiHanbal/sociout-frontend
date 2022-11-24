@@ -9,6 +9,7 @@ import Settings from '../settings/settings.component';
 
 import { selectUser } from '../../store/user/user.selector';
 import Me from '../me/me.component';
+import Upload from '../upload/upload.component';
 
 const Directory = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Directory = () => {
         <Route path="user/:_id" element={<User />} />
         <Route path="me" element={<Me />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="upload" element={<Upload />} />
       </Routes>
     </>
   );
