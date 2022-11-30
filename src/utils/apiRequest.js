@@ -21,7 +21,9 @@ export const apiRequest = async (
     method: reqTypes,
   };
 
-  if (!isFormData && body) {
+  if (isFormData && body) {
+    options.body = body;
+  } else if (!isFormData && body) {
     options.body = JSON.stringify(body);
     options.headers = {
       'Content-Type': 'application/json',

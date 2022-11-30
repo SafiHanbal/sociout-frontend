@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 
-import { Container } from './slider.styles';
+import { Container, Image, PreviewImage } from './slider.styles';
 
-const Slider = ({ images }) => {
+const Slider = ({ images, preview }) => {
   const [index, setIndex] = useState(0);
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
+
   return (
     <Container>
       <Carousel
@@ -19,7 +20,11 @@ const Slider = ({ images }) => {
       >
         {images.map((image, i) => (
           <Carousel.Item key={i}>
-            <img className="d-block w-100" src={image} alt="First slide" />
+            {preview ? (
+              <PreviewImage image={image} alt={`${i} image`} />
+            ) : (
+              <Image src={image} alt={`${i} image`} />
+            )}
           </Carousel.Item>
         ))}
       </Carousel>

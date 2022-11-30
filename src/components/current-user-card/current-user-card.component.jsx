@@ -2,18 +2,12 @@ import { useSelector } from 'react-redux';
 
 import { selectUser } from '../../store/user/user.selector';
 
-import InterestIcon from '../../assets/interest.png';
-import CalendarIcon from '../../assets/calendar.png';
-
 import {
   Arrow,
   Avatar,
   Bio,
   Container,
   CustomizedLink,
-  InfoContainer,
-  InfoIcon,
-  InfoText,
   Name,
   StatsContainer,
   StatsHeading,
@@ -22,42 +16,24 @@ import {
 
 const CurrentUserCard = () => {
   const user = useSelector(selectUser);
-  const {
-    image,
-    userName,
-    followerCount,
-    following,
-    bio,
-    interests,
-    dateOfBirth,
-  } = user;
+
   return (
     <Container>
-      <Avatar src={image} alt="user avatar" />
-      <Name>{userName}</Name>
+      <Avatar src={user?.image} alt="user avatar" />
+      <Name>{user?.userName}</Name>
       <StatsContainer>
         <div>
           <StatsHeading>Followers</StatsHeading>
-          <StatsText>{`${followerCount}`}</StatsText>
+          <StatsText>{`${user?.followerCount}`}</StatsText>
         </div>
         <div>
           <StatsHeading>Following</StatsHeading>
-          <StatsText>{`${following.length}`}</StatsText>
+          <StatsText>{`${user?.following?.length}`}</StatsText>
         </div>
       </StatsContainer>
-      <Bio>{bio.length > 70 ? `${bio.slice(0, 70)}...` : bio}</Bio>
-      {interests.length && (
-        <InfoContainer>
-          <InfoIcon src={InterestIcon} alt="interest icon" />
-          <InfoText>{interests[0]}</InfoText>
-        </InfoContainer>
-      )}
-      {dateOfBirth && (
-        <InfoContainer>
-          <InfoIcon src={CalendarIcon} alt="interest icon" />
-          <InfoText>{interests[0]}</InfoText>
-        </InfoContainer>
-      )}
+      <Bio>
+        {user?.bio?.length > 70 ? `${user?.bio.slice(0, 70)}...` : user?.bio}
+      </Bio>
 
       <CustomizedLink to="/me">
         View More

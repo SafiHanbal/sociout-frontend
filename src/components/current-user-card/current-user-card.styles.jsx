@@ -52,24 +52,6 @@ export const Bio = styled.p`
   margin-bottom: 5px;
 `;
 
-export const InfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 5px;
-`;
-
-export const InfoIcon = styled.img`
-  height: 20px;
-  width: 20px;
-`;
-
-export const InfoText = styled.p`
-  font-size: 14px;
-  margin-left: 10px;
-  color: var(--color-gray-dark-2);
-`;
-
 export const CTAContainer = styled.div`
   display: flex;
   justify-content: space-around;

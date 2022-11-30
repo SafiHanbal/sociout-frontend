@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   Container,
@@ -16,11 +17,16 @@ import {
 
 import Slider from '../slider/slider.component';
 
-const Post = ({ post }) => {
+import { likePostStart, unlikePostStart } from '../../store/post/post.action';
+
+const Post = ({ post, preview = false }) => {
+  const dispatch = useDispatch();
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
     setLike(!like);
+    if (like) dispatch(unlikePostStart(post?._id));
+    if (!like) dispatch(likePostStart(post?._id));
   };
 
   return (
@@ -30,7 +36,7 @@ const Post = ({ post }) => {
         <Name>{post?.user?.userName}</Name>
         <Time>Yesterday</Time>
       </Header>
-      <Slider images={post?.images} />
+      <Slider images={post?.images} preview={preview} />
       {post?.caption && (
         <Caption>
           {post?.caption.length > 100
@@ -38,13 +44,17 @@ const Post = ({ post }) => {
             : post?.caption}
         </Caption>
       )}
-      <ReactionsCount>0 Likes | 0 Comment</ReactionsCount>
-      <ReactionsContainer>
-        <LikeContainer onClick={handleLike}>
-          <LikeIcon like={like ? 1 : 0} />
-        </LikeContainer>
-        <CommentIcon />
-      </ReactionsContainer>
+      {!preview && (
+        <>
+          <ReactionsCount>0 Likes | 0 Comment</ReactionsCount>
+          <ReactionsContainer>
+            <LikeContainer onClick={handleLike}>
+              <LikeIcon like={like ? 1 : 0} />
+            </LikeContainer>
+            <CommentIcon />
+          </ReactionsContainer>
+        </>
+      )}
     </Container>
   );
 };

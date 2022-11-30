@@ -6,7 +6,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/*" element={<Directory />} />
-      <Route path="auth" element={<Authentication />} />
+      <Route path="auth/*" element={<Authentication />} />
     </Routes>
   );
 };
