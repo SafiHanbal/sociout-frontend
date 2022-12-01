@@ -8,14 +8,19 @@ export const UsersBoxContainer = styled.div`
   overflow: scroll;
   box-shadow: 0 4px 8px rgba(var(--color-black-rgb), 0.3);
 
-  &::-webkit-scrollbar {
-    display: none;
+  position: sticky;
+  top: 61px;
+  height: calc(100vh - 76px);
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 1px;
+    height: 0;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  & {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
   }
 `;
 
@@ -25,6 +30,12 @@ export const CustomizedForm = styled(Form)`
   grid-template-rows: 38px;
   grid-gap: 10px;
   padding: 10px;
+
+  position: sticky;
+  top: 0px;
+
+  background-color: var(--color-white);
+  z-index: 10;
 `;
 
 export const UsersList = styled.div`

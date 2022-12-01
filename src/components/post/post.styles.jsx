@@ -9,7 +9,10 @@ export const Container = styled.div`
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(var(--color-black-rgb), 0.3);
   overflow: hidden;
-  margin-bottom: 15px;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
 `;
 
 export const Header = styled.div`
@@ -55,26 +58,10 @@ export const ReactionsCount = styled.p`
 `;
 
 export const ReactionsContainer = styled.div`
-  border: 1px solid var(--color-gray-light-3);
+  border-top: 1px solid var(--color-gray-light-3);
   border-radius: 0 0 5px 5px;
   display: flex;
   align-items: center;
-`;
-
-export const LikeContainer = styled.div`
-  align-self: center;
-  justify-self: center;
-
-  display: block;
-  width: 50%;
-  cursor: pointer;
-  transition: all 0.2s;
-  border-right: 1px solid var(--color-gray-light-3);
-  border-radius: 0 0 0 5px;
-
-  &:hover {
-    background-color: var(--color-gray-light-1);
-  }
 `;
 
 export const LikeIcon = styled(Heart)`

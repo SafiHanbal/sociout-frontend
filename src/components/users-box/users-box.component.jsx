@@ -50,8 +50,8 @@ const UsersBox = () => {
       <UsersList>
         {searchedUsers.length ? (
           searchedUsers.map((user) => (
-            <CustomizedLink to={`/user/${user?._id}`}>
-              <UserCard key={user?._id} user={user} />
+            <CustomizedLink key={user?._id} to={`/user/${user?._id}`}>
+              <UserCard user={user} />
             </CustomizedLink>
           ))
         ) : (

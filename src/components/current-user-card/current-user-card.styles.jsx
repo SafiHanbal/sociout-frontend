@@ -8,6 +8,9 @@ export const Container = styled.div`
   box-shadow: 0 4px 8px rgba(var(--color-black-rgb), 0.3);
   padding: 15px 20px 10px;
   align-self: flex-start;
+
+  position: sticky;
+  top: 61px;
 `;
 
 export const Avatar = styled.img`

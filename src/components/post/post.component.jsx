@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
   Container,
@@ -9,25 +8,19 @@ import {
   Time,
   Caption,
   ReactionsContainer,
-  LikeIcon,
   CommentIcon,
-  LikeContainer,
   ReactionsCount,
 } from './post.styles';
 
 import Slider from '../slider/slider.component';
-
-import { likePostStart, unlikePostStart } from '../../store/post/post.action';
+import PostModal from '../post-modal/post-modal.component';
+import LikeIcon from '../like-icon/like-icon.component';
 
 const Post = ({ post, preview = false }) => {
-  const dispatch = useDispatch();
-  const [like, setLike] = useState(false);
+  const [postModalActive, setPostModalActive] = useState(false);
 
-  const handleLike = () => {
-    setLike(!like);
-    if (like) dispatch(unlikePostStart(post?._id));
-    if (!like) dispatch(likePostStart(post?._id));
-  };
+  const handleOpenModal = () => setPostModalActive(true);
+  const handleCloseModal = () => setPostModalActive(false);
 
   return (
     <Container>
@@ -48,13 +41,16 @@ const Post = ({ post, preview = false }) => {
         <>
           <ReactionsCount>0 Likes | 0 Comment</ReactionsCount>
           <ReactionsContainer>
-            <LikeContainer onClick={handleLike}>
-              <LikeIcon like={like ? 1 : 0} />
-            </LikeContainer>
-            <CommentIcon />
+            <LikeIcon height={40} postId={post?.id} />
+            <CommentIcon onClick={handleOpenModal} />
           </ReactionsContainer>
         </>
       )}
+      <PostModal
+        post={post}
+        postModalActive={postModalActive}
+        handleCloseModal={handleCloseModal}
+      />
     </Container>
   );
 };
