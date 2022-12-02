@@ -4,7 +4,6 @@ import {
   CommentContainer,
   Container,
   CustomizedModal,
-  LikeContainer,
   ReactionContianer,
   ReactionCounter,
   SliderContainer,
@@ -21,12 +20,14 @@ const PostModal = ({ post, postModalActive, handleCloseModal }) => {
       <Container>
         <SliderContainer>
           <Slider images={post?.images} />
-          <LikeIcon height={60} variant="circle" postId={post?._id} />
+          <LikeIcon height={60} variant="circle" post={post} />
         </SliderContainer>
         <ReactionContianer>
           <CaptionContainer>
             <Caption>{post?.caption}</Caption>
-            <ReactionCounter>0 Likes | 0 Comments</ReactionCounter>
+            <ReactionCounter>
+              {post?.likesCount} Likes | 0 Comments
+            </ReactionCounter>
           </CaptionContainer>
           <CommentContainer></CommentContainer>
           <CustomizedForm>

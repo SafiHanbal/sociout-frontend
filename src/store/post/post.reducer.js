@@ -33,14 +33,14 @@ export const postReducer = (state = INITIAL_STATE, action) => {
     case POST_ACTION_TYPES.LIKE_POST_START:
       return { ...state, likeLoading: true };
     case POST_ACTION_TYPES.LIKE_POST_SUCCESS:
-      return { ...state, likeLoading: false };
+      return { ...state, likeLoading: false, posts: payload };
     case POST_ACTION_TYPES.LIKE_POST_FAILED:
       return { ...state, likeLoading: false, likeError: payload };
 
     case POST_ACTION_TYPES.UNLIKE_POST_START:
       return { ...state, likeLoading: true };
     case POST_ACTION_TYPES.UNLIKE_POST_SUCCESS:
-      return { ...state, likeLoading: false };
+      return { ...state, likeLoading: false, posts: payload };
     case POST_ACTION_TYPES.UNLIKE_POST_FAILED:
       return { ...state, likeLoading: false, likeError: payload };
 

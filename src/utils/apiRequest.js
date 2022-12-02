@@ -37,7 +37,12 @@ export const apiRequest = async (
     };
   }
 
-  const data = await fetch(url, options);
+  const res = await fetch(url, options);
 
-  return await data.json();
+  if (reqTypes === API_REQ_TYPES.DELETE && !(await res.text())) {
+    return {
+      status: 'success',
+    };
+  }
+  return await res.json();
 };

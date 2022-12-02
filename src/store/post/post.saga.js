@@ -9,6 +9,8 @@ import {
   createPostFailed,
   likePostSuccess,
   likePostFailed,
+  unlikePostSuccess,
+  unlikePostFailed,
 } from './post.action';
 
 // Get Posts
@@ -51,12 +53,18 @@ function* onCreatePostStart() {
 }
 
 // Like Post
-function* likePostAsync({ payload: postId }) {
+function* likePostAsync({ payload: { posts, postId } }) {
   try {
     const data = yield call(apiRequest, `api/v1/like/${postId}`);
     if (data.status !== 'success') throw new Error(data.message);
 
-    yield put(likePostSuccess(data));
+    const newPosts = posts.map((post) => {
+      if (post?._id === postId)
+        return { ...post, isLiked: true, likesCount: post?.likesCount + 1 };
+      else return post;
+    });
+
+    yield put(likePostSuccess(newPosts));
   } catch (err) {
     yield put(likePostFailed(err));
   }
@@ -66,10 +74,37 @@ function* onLikePostStart() {
   yield takeLatest(POST_ACTION_TYPES.LIKE_POST_START, likePostAsync);
 }
 
+// Unlike Post
+function* unlikePostAsync({ payload: { posts, postId } }) {
+  try {
+    const data = yield call(
+      apiRequest,
+      `api/v1/like/${postId}`,
+      API_REQ_TYPES.DELETE
+    );
+    if (data.status !== 'success') throw new Error(data.message);
+
+    const newPosts = posts.map((post) => {
+      if (post?._id === postId)
+        return { ...post, isLiked: false, likesCount: post?.likesCount - 1 };
+      else return post;
+    });
+    yield put(unlikePostSuccess(newPosts));
+  } catch (err) {
+    yield put(unlikePostFailed(err));
+  }
+}
+
+function* onUnlikePostStart() {
+  yield takeLatest(POST_ACTION_TYPES.UNLIKE_POST_START, unlikePostAsync);
+}
+
+// Post Saga
 export function* postSaga() {
   yield all([
     call(onGetPostsStart),
     call(onCreatePostStart),
     call(onLikePostStart),
+    call(onUnlikePostStart),
   ]);
 }
