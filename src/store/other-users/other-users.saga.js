@@ -43,7 +43,6 @@ function* getUserAsync({ payload: userId }) {
     const data = yield call(apiRequest, `api/v1/user/${userId}`);
     if (data.status !== 'success') throw new Error(data.message);
     const user = data.data.data;
-    console.log(user);
     yield put(getUserSuccess(user));
   } catch (err) {
     yield put(getUserFailed(err));

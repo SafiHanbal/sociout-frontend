@@ -76,7 +76,6 @@ function* signUpAsync({
     const { user, token } = data.data;
     yield put(signupSuccess(user));
     yield put(setToken(token));
-    console.log(4);
   } catch (err) {
     yield put(signupFailed(err));
   }

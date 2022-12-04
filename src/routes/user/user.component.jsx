@@ -11,6 +11,7 @@ import {
   selectUser,
   selectUserLoading,
 } from '../../store/other-users/other-users.selector';
+import UserPostBox from '../../components/user-posts-box/user-posts-box.component';
 
 const User = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const User = () => {
       ) : (
         <>
           <UserHeader user={selectedUser} />
+          <UserPostBox userId={selectedUser?._id} />
         </>
       )}
     </Container>

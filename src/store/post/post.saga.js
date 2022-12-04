@@ -16,13 +16,12 @@ import {
 } from './post.action';
 
 // Get Posts
-function* getPostAsync() {
+function* getPostAsync({ payload: { posts, page } }) {
   try {
-    const res = yield call(apiRequest, 'api/v1/post?limit=5&page=1');
+    const res = yield call(apiRequest, `api/v1/post?limit=5&page=${page}`);
     if (res.status !== 'success') throw new Error(res.message);
 
-    const { posts } = res.data;
-    yield put(getPostsSuccess(posts));
+    yield put(getPostsSuccess([...posts, ...res.data.posts]));
   } catch (err) {
     yield put(getPostsFailed(err));
   }
@@ -120,7 +119,6 @@ function* commentOnPostAsync({ payload: { post, comment, posts } }) {
       return oldPost;
     });
 
-    console.log(res.data.comment, newPosts);
     yield put(commmentOnPostSuccess(newPosts));
   } catch (err) {
     yield put(commmentOnPostFailed(err));
