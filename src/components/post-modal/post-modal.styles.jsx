@@ -53,7 +53,21 @@ export const ReactionCounter = styled.p`
   color: var(--color-gray-dark-3);
 `;
 
-export const CommentContainer = styled.div``;
+export const CommentsContainer = styled.div`
+  padding: 7px 10px;
+  overflow: scroll;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 0;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+`;
 
 export const CustomizedForm = styled(Form)`
   padding: 10px;

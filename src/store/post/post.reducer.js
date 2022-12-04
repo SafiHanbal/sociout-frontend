@@ -47,7 +47,7 @@ export const postReducer = (state = INITIAL_STATE, action) => {
     case POST_ACTION_TYPES.COMMENT_ON_POST_START:
       return { ...state, commentLoading: true };
     case POST_ACTION_TYPES.COMMENT_ON_POST_SUCCESS:
-      return { ...state, commentLoading: false };
+      return { ...state, commentLoading: false, posts: payload };
     case POST_ACTION_TYPES.COMMENT_ON_POST_FAILED:
       return { ...state, commentLoading: false, commentError: payload };
 

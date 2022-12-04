@@ -11,15 +11,17 @@ import {
   likePostFailed,
   unlikePostSuccess,
   unlikePostFailed,
+  commmentOnPostSuccess,
+  commmentOnPostFailed,
 } from './post.action';
 
 // Get Posts
 function* getPostAsync() {
   try {
-    const data = yield call(apiRequest, 'api/v1/post');
-    if (data.status !== 'success') throw new Error(data.message);
+    const res = yield call(apiRequest, 'api/v1/post?limit=5&page=1');
+    if (res.status !== 'success') throw new Error(res.message);
 
-    const { posts } = data.data;
+    const { posts } = res.data;
     yield put(getPostsSuccess(posts));
   } catch (err) {
     yield put(getPostsFailed(err));
@@ -33,14 +35,14 @@ function* onGetPostsStart() {
 // Create Post
 function* createPostAsync({ payload: formData }) {
   try {
-    const data = yield call(
+    const res = yield call(
       apiRequest,
       'api/v1/post',
       API_REQ_TYPES.POST,
       formData,
       true
     );
-    if (data.status !== 'success') throw new Error(data.message);
+    if (res.status !== 'success') throw new Error(res.message);
 
     yield put(createPostSuccess());
   } catch (err) {
@@ -55,8 +57,8 @@ function* onCreatePostStart() {
 // Like Post
 function* likePostAsync({ payload: { posts, postId } }) {
   try {
-    const data = yield call(apiRequest, `api/v1/like/${postId}`);
-    if (data.status !== 'success') throw new Error(data.message);
+    const res = yield call(apiRequest, `api/v1/like/${postId}`);
+    if (res.status !== 'success') throw new Error(res.message);
 
     const newPosts = posts.map((post) => {
       if (post?._id === postId)
@@ -77,12 +79,12 @@ function* onLikePostStart() {
 // Unlike Post
 function* unlikePostAsync({ payload: { posts, postId } }) {
   try {
-    const data = yield call(
+    const res = yield call(
       apiRequest,
       `api/v1/like/${postId}`,
       API_REQ_TYPES.DELETE
     );
-    if (data.status !== 'success') throw new Error(data.message);
+    if (res.status !== 'success') throw new Error(res.message);
 
     const newPosts = posts.map((post) => {
       if (post?._id === postId)
@@ -99,6 +101,36 @@ function* onUnlikePostStart() {
   yield takeLatest(POST_ACTION_TYPES.UNLIKE_POST_START, unlikePostAsync);
 }
 
+// Comment on Post
+function* commentOnPostAsync({ payload: { post, comment, posts } }) {
+  try {
+    const res = yield call(apiRequest, 'api/v1/comment', API_REQ_TYPES.POST, {
+      post,
+      comment,
+    });
+    if (res.status !== 'success') throw new Error(res.message);
+
+    const newPosts = posts.map((oldPost) => {
+      if (oldPost?._id === post) {
+        return {
+          ...oldPost,
+          comments: [res.data.comment, ...oldPost.comments],
+        };
+      }
+      return oldPost;
+    });
+
+    console.log(res.data.comment, newPosts);
+    yield put(commmentOnPostSuccess(newPosts));
+  } catch (err) {
+    yield put(commmentOnPostFailed(err));
+  }
+}
+
+function* onCommentOnPostStart() {
+  yield takeLatest(POST_ACTION_TYPES.COMMENT_ON_POST_START, commentOnPostAsync);
+}
+
 // Post Saga
 export function* postSaga() {
   yield all([
@@ -106,5 +138,6 @@ export function* postSaga() {
     call(onCreatePostStart),
     call(onLikePostStart),
     call(onUnlikePostStart),
+    call(onCommentOnPostStart),
   ]);
 }

@@ -39,7 +39,12 @@ const Post = ({ post, preview = false }) => {
       )}
       {!preview && (
         <>
-          <ReactionsCount>{post?.likesCount} Likes | 0 Comment</ReactionsCount>
+          <ReactionsCount>
+            {`${post?.likesCount} ${post?.likesCount > 1 ? 'Likes' : 'Like'}`} |{' '}
+            {`${post?.comments?.length} ${
+              post?.comments?.length > 1 ? 'Comments' : 'Comment'
+            }`}
+          </ReactionsCount>
           <ReactionsContainer>
             <LikeIcon height={40} post={post} />
             <CommentIcon onClick={handleOpenModal} />
